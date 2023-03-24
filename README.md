@@ -1,7 +1,6 @@
 # <center>Secure Computation on Integers —— Python Project
 
 # SOCI
-.
 SOCI (secure outsourced computation on integers scheme) provides a twin-server architecture for secure outsourced computation based on Paillier cryptosystem, which supports computations on encrypted integers rather than just natural numbers [1]. It significently improves the computation efficiency compared with fully homomorphic encryption mechanism. SOCI includes a suite of efficient secure computation protocols, including secure multiplication ($\textsf{SMUL}$), secure comparison ($\textsf{SCMP}$) and secure dot production ($\textsf{SDOT}$). The protocols realize secure computations on both non-negative integers and negative integers. 
 
 
@@ -34,11 +33,11 @@ PaillierTD has the additive homomorphism and scalar-multipilication homomorphism
 The system architecture of SOCI is shown in the figure above, which consists of a data owner (DO) and two servers, i.e., a cloud platform (CP) and a computation service provider (CSP).
 
 - DO: DO takes charge of generating and distributing keys to CP and CSP securely. Specifically, DO calls the $\textsf{KeyGen}$ algorithm to generate public/private key pair $(pk,sk)$ for Paillier cryptosystem and then splits $sk$ into two partially private keys $(sk_1, sk_2)$. Next, DO distributes $(pk,sk_1)$ and $(pk, sk_2)$ to CP and CSP, respectively. To protect data privacy, DO encrypts data with $pk$ and outsources encrypted data to CP. Besides, DO outsources computation services over encrypted data to CP and CSP.
-- CP: CP stores and manages the encrypted data sent from DO, and produces the intermediate results and the final results in an encrypted form. In addition, CP can directly execute certain calculations over encrypted data such as homomorphic addition and homomorphic scalarmultiplication. CP interacts with CSP to perform $\textsf{SMUL}$, $\textsf{SCMP}$, $\textsf{SSBA}$, and $\textsf{SDIV}$ over encrypted data.
+- CP: CP stores and manages the encrypted data sent from DO, and produces the intermediate results and the final results in an encrypted form. In addition, CP can directly execute certain calculations over encrypted data such as homomorphic addition and homomorphic scalarmultiplication. CP interacts with CSP to perform $\textsf{SMUL}$, $\textsf{SCMP}$ and $\textsf{SDOT}$ over encrypted data.
 - CSP: CSP only provides online computation services and does not store any encrypted data. Specifically, CSP cooperates with CP to perform secure computations (e.g., multiplication, comparison, division) on encrypted data.
 
 
-# SOCI API Description
+# SOCI-Python API Description
 
 The project in this version is written in Python.
 
@@ -48,13 +47,13 @@ Taken as input a security parameter $\kappa$, this algorithm generates two stron
 
 Taken as input the private key  $sk$ , it computes $sk_1$ and $sk_2$. The private key $sk=\lambda$ is split into two parts denoted by $sk_1 = \lambda_1$ and $sk_2 = \lambda_2$, s.t., $\lambda_1+\lambda_2=0\mod\lambda$ and $\lambda_1+\lambda_2=1\mod N$. 
 
-- PaillierPublicKey(). This class outputs the public key public_key=$(g,N)$.
+- PaillierPublicKey(). This class outputs the public key public_key= $(g,N)$.
 
 
-- PaillierPrivateKey(). This class outputs the private key private_key=$\lambda$.
+- PaillierPrivateKey(). This class outputs the private key private_key= $\lambda$.
 
 
-- PartialPaillierPrivateKey(). This class outputs the partial private keys partial_private_keys=$(sk_1,sk_2)$.
+- PartialPaillierPrivateKey(). This class outputs the partial private keys partial_private_keys= $(sk_1,sk_2)$.
 
 
 ## encrypt()
@@ -85,21 +84,21 @@ Given ciphertexts $ex$ and $ey$, this algorithm computes the secure comparison r
 
 ## sdot_vector()
 
-Given ciphertexts $ex$ and $ey$, this algorithm computes the dot production of vectors and outputs the result $ciphertext$. Suppose $ex=[ x]$ and $ey=[ y]$, where vectors $x=(x_1,\cdots,x_n)$, $y=(y_1,\cdots,y_n)$ and $[ x]=([ x_1],\cdots,[ x_n])$, $[ y]=([ y_1],\cdots,[ y_n])$. Then, the result $enc<sub>dot</sub>=[ z]$, where $\sum_{i=1}^nx_i\cdot y_i$. 
+Given ciphertexts $ex$ and $ey$, this algorithm computes the dot production of vectors and outputs the result $ciphertext$. Suppose $ex=[ x]$ and $ey=[ y]$, where vectors $x=(x_1,\cdots,x_n)$, $y=(y_1,\cdots,y_n)$ and $[ x]=([ x_1],\cdots,[ x_n])$, $[ y]=([ y_1],\cdots,[ y_n])$. Then, the result $enc_{dot}=[ z]$, where $$z=\sum_{i=1}^n x_i\cdot y_i.$$ 
 
 -------------------------------------------
 
-# build Dependencies
+# Build Dependencies
 
 * OS: Windows 11
 * numpy
 
-# Build SOCI
+# Build SOCI-Python
 ```sh
 pip install -r requirements.txt 
 ```
 
-## Run SOCI
+## Run SOCI-Python
 ```sh
 python3 algorithm_test.py
 ```
@@ -141,7 +140,7 @@ python3 algorithm_test.py
     ---------------------------
     
 # Performance
-We used different KEY_LEN_BIT to test the performance of each function. The experimental environment is xxxx cpu, xxxx memory, the experimental results are as follows:  
+We used different KEY_LEN_BIT to test the performance of each function. The experimental environment is a laptop with CPU 11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz and 2.69 GHz, and 16G memory. The experimental results are as follows:  
 |**Length of key in bit**| **KEY_LEN_BIT**|**256**|**378**|**512**|**640**| **768** | **896** | **1024**|
 | ------ | ------ | ------ | ------ |------ |------ |  ------ |------ |------ |
 | PaillierTD Encryption	| encrypt	| 0.30902	| 0.80433	| 1.80521	| 3.17866	| 4.76628	| 7.47308	| 11.45192| 
@@ -156,7 +155,7 @@ We used different KEY_LEN_BIT to test the performance of each function. The expe
 The time unit is ms.
 
 # Benchmark
-in funtion generate_paillier_keypair(n_length,sigma_length), you can change the value of KEY_LEN_BIT and SIGMA_LEN_BIT . KEY_LEN_BIT determine the big prime's length in bit, and  SIGMA_LEN_BIT determine sk1's length in bit. 
+in funtion generate_paillier_keypair(n_length,sigma_length), you can change the value of KEY_LEN_BIT and SIGMA_LEN_BIT . KEY_LEN_BIT determine the big prime's length in bit, and  SIGMA_LEN_BIT determine the length of $sk_1$ in bit. 
 
 # Reference
 
