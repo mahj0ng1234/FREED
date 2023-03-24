@@ -161,4 +161,3 @@ in funtion generate_paillier_keypair(n_length,sigma_length), you can change the 
 # Reference
 
 1. Bowen Zhao, Jiaming Yuan, Ximeng Liu, Yongdong Wu, Hwee Hwa Pang, and Robert H. Deng. SOCI: A toolkit for secure outsourced computation on integers. IEEE Transactions on Information Forensics and Security, 2022, 17: 3637-3648.
-
