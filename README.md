@@ -86,6 +86,12 @@ Given ciphertexts $ex$ and $ey$, this algorithm computes the secure comparison r
 
 Given ciphertexts $ex$ and $ey$, this algorithm computes the dot production of vectors and outputs the result $ciphertext$. Suppose $ex=[ x]$ and $ey=[ y]$, where vectors $x=(x_1,\cdots,x_n)$, $y=(y_1,\cdots,y_n)$ and $[ x]=([ x_1],\cdots,[ x_n])$, $[ y]=([ y_1],\cdots,[ y_n])$. Then, the result $enc_{dot}=[ z]$, where $$z=\sum_{i=1}^n x_i\cdot y_i.$$ 
 
+## extractFeatures()
+Taken as input a gallery $probe$, this algorithm extracts feature vectors of the gallery and outputs the result $features$.
+
+## krnn()
+Given two extracted feature vectors $qf$ and $gf$,where $qf$ is the vector of input picture and $gf$ is the vector of the gallery for target person. This algorithm computes the similarity metrics q_g_dist, ranks the 𝑘-reciprocal nearest neighbors and compares the similarity metrics with the 𝑘-reciprocal nearest neighbors. Then the algorithm outputs $probe$, where probe is the matched picture.  
+
 -------------------------------------------
 
 # Build Dependencies
