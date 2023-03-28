@@ -331,7 +331,7 @@ in funtion generate_paillier_keypair(n_length,sigma_length), you can change the 
 
 # Performance
 
-We test the performance of each function. The experimental environment is a laptop with CPU 11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz and 2.69 GHz, and 16G memory. The experimental results are as follows:
+We used different KEY_LEN_BIT to test the performance of each function. The experimental environment is a laptop with CPU 10th Gen Intel(R) Core(TM) i5-10210U, 2 cores @ 2.70GHz and 2 cores @ 2.69 GHz, and 16G memory. The experimental results are as follows.
 
 **Table 1: Decoding Error Rate**
 |   | 1K | 10K | 100K | 1,000K | 10,000K |  Average |
