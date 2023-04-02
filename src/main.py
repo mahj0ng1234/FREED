@@ -32,6 +32,7 @@ if __name__ == '__main__':
         for index in initial_rank:
             if q_g_dist[j][index] >= g_dist_k[index]:
                 count += 1
+                print(gallery[index])
         if count >= k * 3 // 10:
             print(probe[j], count)
 
