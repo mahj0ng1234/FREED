@@ -1,6 +1,6 @@
 import numpy as np
 import random
-
+import time
 from encryption import paillier
 from model.opt import opt
 from model_util import loadNetwork, extractFeatures, extractFeature, list_pictures
@@ -11,11 +11,10 @@ if __name__ == '__main__':
     model = loadNetwork(opt.weight)
     print('model loading success!')
 
-    queryPath = 'F:\\python-workspace\\datasets\\Market-1501\\query1'
+    queryPath = 'D:\\python-workspace\\python-workspace\\datasets\\Market-1501\\query1'
     probe = list_pictures(queryPath)
     qf = extractFeatures(model, probe)
-
-    galleryPath = 'F:\\python-workspace\\datasets\\Market-1501\\test_gallery'
+    galleryPath = 'D:\\python-workspace\\python-workspace\\datasets\Market-1501\\num_gallery\\gallery10'
     gallery = list_pictures(galleryPath)
     gf = extractFeatures(model, gallery)
     g_g_dist = np.dot(gf, np.transpose(gf))
@@ -25,17 +24,14 @@ if __name__ == '__main__':
         g_dist_k[i] = float(sorted(g_g_dist[i], reverse=True)[k:k+1][0])
 
     q_g_dist = np.dot(qf, np.transpose(gf))
-
     for j in range(len(qf)):
         initial_rank = np.argpartition(-q_g_dist[j], range(k))[:k]
         count = 0
         for index in initial_rank:
             if q_g_dist[j][index] >= g_dist_k[index]:
                 count += 1
-                print(gallery[index])
         if count >= k * 3 // 10:
             print(probe[j], count)
-
     """print('-----------')
     for j in range(len(qf)):
         initial_rank = np.argpartition(-q_g_dist[j], range(k))[:k]
@@ -49,6 +45,7 @@ if __name__ == '__main__':
             print(probe[j], count)"""
 
     print('----------Encrypted version-----------')
+    s=time.time()
     public_key, private_key, partial_private_keys = paillier.generate_paillier_keypair(n_length=256)
     # encrypt gallery
     gf_numpy = gf.numpy()
@@ -56,6 +53,7 @@ if __name__ == '__main__':
     for i in range(len(gf_numpy)):
         for j in range(len(gf_numpy[i])):
             enc_gf[i][j] = public_key.encrypt(gf_numpy[i][j].item())
+
 
     # encrypt the k-the of g_g_dist
     """enc_g_dist_k = np.zeros(len(g_dist_k), dtype=paillier.EncryptedNumber)
@@ -65,7 +63,7 @@ if __name__ == '__main__':
     cp = paillier.ThresholdPaillier(public_key, partial_private_keys.sk1)
     csp = paillier.ThresholdPaillier(public_key, partial_private_keys.sk2)
     sc = SecureComputing(cp, csp)
-
+    s=time.time()
     qf_numpy = qf.numpy()
     enc_qf = np.zeros((len(qf_numpy), len(qf_numpy[0])), dtype=paillier.EncryptedNumber)
     for i in range(len(qf_numpy)):
@@ -75,11 +73,14 @@ if __name__ == '__main__':
 
     enc_q_g_dist, q_g_dist1 = sc.sdot(enc_qf, enc_gf)
 
+
+
     for j in range(len(q_g_dist1)):
         initial_rank = np.argpartition(-q_g_dist1[j], range(k))[:k]
         count = 0
         for index in initial_rank:
-            if q_g_dist1[j][index] >= g_dist_k[index] * 10 ** 44:
+            if q_g_dist1[j][index] >= g_dist_k[index] * 24.036 ** 43:
                 count += 1
         if count >= k * 3 // 10:
             print(probe[j], count)
+
