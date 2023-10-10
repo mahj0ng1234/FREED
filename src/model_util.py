@@ -86,7 +86,7 @@ def id(file_path):
     """
     return int(file_path.split('\\')[-1].split('_')[0])
 
-
+# jpg|jpeg|bmp|png|ppm|npy files
 def list_pictures(directory, ext='jpg|jpeg|bmp|png|ppm|npy'):
     assert os.path.isdir(directory), 'dataset is not exists!{}'.format(directory)
     return sorted([os.path.join(root, f)

@@ -93,7 +93,7 @@ class MGN(nn.Module):
         nn.init.kaiming_normal_(reduction[0].weight, mode='fan_in')
         # nn.init.constant_(reduction[0].bias, 0.)
 
-        # bn
+        # bn 
         nn.init.normal_(reduction[1].weight, mean=1., std=0.02)
         nn.init.constant_(reduction[1].bias, 0.)
 

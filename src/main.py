@@ -6,6 +6,7 @@ from model.opt import opt
 from model_util import loadNetwork, extractFeatures, extractFeature, list_pictures
 from secomp.secureprotol import SecureComputing
 
+# main app
 if __name__ == '__main__':
 
     model = loadNetwork(opt.weight)

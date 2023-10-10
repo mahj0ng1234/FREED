@@ -101,7 +101,7 @@ class MGN(nn.Module):
     @staticmethod
     def _init_fc(fc):
         nn.init.kaiming_normal_(fc.weight, mode='fan_out')
-        # nn.init.normal_(fc.weight, std=0.001)
+        # nn.init.normal_(fc.weight, std=0.001) 
         nn.init.constant_(fc.bias, 0.)
 
     def forward(self, x):

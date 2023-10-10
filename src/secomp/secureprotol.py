@@ -49,7 +49,7 @@ class SecureComputing(object):
         return enc_q_g_dist, q_g_dist
 
     def batch_smul(self, elist, sigm_len=None):
-
+    # Secure Multiplication Protocol
         bit_len = 0
 
         if sigm_len is None:

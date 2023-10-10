@@ -4,9 +4,13 @@
 
 # Person Re-identification
 
-Person re-identification (Re-ID) is a critical technology to identify a target person from captured person images
-by surveillance cameras, which has attracted extensive attention in computer vision. As depicted in Fig. 1, an organization (e.g., Police Station) outsources a person Re-ID task to multiple surveillance cameras and a cloud server to save deployment costs. To perform the person Re-ID task, the surveillance cameras located in different areas capture and send person images to the cloud server. The cloud server receives a gallery from the organization, which is a collection of a target person's images, and checks whether or not the person image submitted by each camera matches the target person as appeared in the gallery. If yes, the cloud server sends
-to the organization the person Re-ID result, which may include the location of the matched camera, the captured person image, and the time when it was captured. Indeed, person Re-ID can be widely applied to person tracking, such as looking for lost children and tracking criminals.
+Person re-identification (Re-ID) is a crucial technology within the domain of computer vision, focused on the identification of a specific individual from images obtained through surveillance cameras. This technology has garnered significant attention due to its applicability in various scenarios.
+
+As illustrated in Figure 1, organizations, such as police stations, often delegate person Re-ID tasks to a network of surveillance cameras and a centralized cloud server. This approach is adopted to optimize deployment costs. To execute the person Re-ID task, surveillance cameras placed in different locations capture images of individuals and transmit these images to the cloud server.
+
+The cloud server receives a gallery provided by the organization, which comprises a collection of images featuring a target individual. It then proceeds to compare each submitted person image from the surveillance cameras with the individuals depicted in the gallery. If a match is identified, the cloud server relays the person Re-ID outcome to the organization. This result may encompass details like the camera's location where the match occurred, the image of the identified person, and the timestamp of the image capture.
+
+Indeed, person Re-ID finds diverse applications in person tracking, including locating lost children and tracing individuals involved in criminal activities.
 
 <img src="./resource/Re-ID.png" width="600">
 
@@ -15,22 +19,11 @@ to the organization the person Re-ID result, which may include the location of t
 
 # FREED
 
-In recent years, person Re-ID has triggered great privacy
-concerns of person images. General Data Protection Regulation (GDPR) stipulates that person images belong to
-personal private data. European Data Protection Supervisor
-(EDPS) video-surveillance guidelines regulate that any form
-of surveillance is an intrusion of the fundamental rights to the protection of personal data and of the right to privacy. 
+In recent years, person Re-identification (Re-ID) has given rise to significant concerns regarding the privacy of individual's images. The General Data Protection Regulation (GDPR) explicitly categorizes person images as personal and private data. Additionally, the video-surveillance guidelines established by the European Data Protection Supervisor (EDPS) assert that any form of surveillance represents an intrusion into the fundamental rights of personal data protection and the right to privacy.
 
-However, there is no efficient solution to tackle the image privacy
-concern for person Re-ID. Inspired by the privacy requirements, we propose FREED,
-the first system solution for privacy-preserving person Re-ID,
-which supports the state-of-the-art person Re-ID operations
-on encrypted feature vectors of person images. To handle the
-encryption of feature vectors effectively and enable person ReID operations on encrypted feature vectors efficiently, FREED
-develops a suite of batch secure computing protocols based on
-a twin-server architecture and the threshold Paillier cryptosystem. We demonstrate our secure computing protocols are more
-efficient than existing protocols and FREED achieves a precision
-equal to the state-of-the-art plaintext method.
+Regrettably, there has been a notable absence of effective solutions to address image privacy concerns within the context of person Re-ID. Driven by these privacy imperatives, we introduce FREED, a groundbreaking system solution designed to preserve the privacy of person Re-ID. FREED is the first of its kind, enabling state-of-the-art person Re-ID operations while working with encrypted feature vectors derived from person images.
+
+To effectively handle the encryption of feature vectors and facilitate efficient person Re-ID operations on encrypted feature vectors, FREED has developed a suite of batch secure computing protocols. These protocols are founded on a twin-server architecture and leverage the threshold Paillier cryptosystem. Our demonstrations have underscored the superior efficiency of our secure computing protocols compared to existing alternatives, with FREED achieving precision levels equivalent to the state-of-the-art plaintext methods.
 
 
 
@@ -39,7 +32,7 @@ equal to the state-of-the-art plaintext method.
 
 ## 1. Threshold Paillier Cryptosystem
 
-The protocols in SOCI are built based on Pailliar cryptosystem with threshold decryption (PaillierTD), which is a variant of the conventional Paillier cryptosystem. PaillierTD splits the private key of the Paillier cryptosystem into two partially private keys. Any partially private key cannot effectively decrypt a given ciphertext encrypted by the Paillier cryptosystem. PaillierTD consists of the following algorithms.
+The protocols within the SOCI framework are constructed upon the foundation of the Paillier cryptosystem with threshold decryption (PaillierTD). This variant of the conventional Paillier cryptosystem divides the private key into two partially private keys. Importantly, neither of these partially private keys alone possesses the capability to effectively decrypt a ciphertext that has been encrypted using the Paillier cryptosystem. The PaillierTD scheme comprises the following algorithms.
 
 $\textbf{Key Generation} (\textsf{KeyGen})$: Let $p,q$ be two strong prime numbers (i.e., $p=2p'+1$ and $q=2q'+1$, where $p'$ and $q'$ are prime numbers) with $\kappa$ bits (e.g., $\kappa=512$). Compute $N=p\cdot q$, $\lambda=lcm(p-1,q-1)$ and $\mu=\lambda^{-1}\mod N$. Let the generator $g=N+1$, the public key $pk=(g,n)$ and the private key $sk=\lambda$.
 
